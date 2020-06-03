@@ -121,10 +121,13 @@ public class MyTicketFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ticket ticket = ticketArrayList.get(position);
-                Intent i = new Intent (context, UploadPaymentActivity.class);
-                i.putExtra("ticket_id", ticket.id);
-                i.putExtra("payment_total", ticket.paymentTotal);
-                startActivity(i);
+
+                if (!ticket.isPaid && !ticket.isConfirmed) {
+                    Intent i = new Intent (context, UploadPaymentActivity.class);
+                    i.putExtra("ticket_id", ticket.id);
+                    i.putExtra("payment_total", ticket.paymentTotal);
+                    startActivity(i);
+                }
             }
         });
 

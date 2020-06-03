@@ -186,7 +186,7 @@ public class AdminPaymentListActivity extends ListActivity {
                         konfirm.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                final ProgressDialog progressDialog = ProgressDialog.show(AdminPaymentListActivity.this, "Loading", "Menghapus...");
+                                final ProgressDialog progressDialog = ProgressDialog.show(AdminPaymentListActivity.this, "Loading", "Mengkonfirmasi...");
 
                                 String url = Config.HOST + "/admin/payment-accept.php?id=" + payment.id;
                                 StringRequest request1 = new StringRequest(Request.Method.GET, url,
