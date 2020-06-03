@@ -41,22 +41,11 @@
                 android:layout_alignParentTop="true" />
 
             <Button
-                android:id="@+id/trailer"
-                style="@style/bookButton"
-                android:layout_width="fill_parent"
-                android:layout_height="35dp"
-                android:layout_below="@id/image"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="24dp"
-                android:text="Tampilkan Trailer" />
-
-            <Button
                 android:id="@+id/bookButton"
                 style="@style/bookButton"
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
-                android:layout_below="@id/trailer"
+                android:layout_below="@id/image"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="24dp"

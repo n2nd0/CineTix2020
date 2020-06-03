@@ -1,27 +1,25 @@
 package com.uas.cinetix;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
@@ -81,9 +79,19 @@ public class SignPageActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 progressDialog.dismiss();
-                                Intent i = new Intent (SignPageActivity.this, HomeActivity.class);
-                                finishAffinity();
-                                startActivity(i);
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    Log.i("role", jsonResponse.getString("role"));
+                                    Intent i;
+                                    if (jsonResponse.getString("role").equals("admin")) {
+                                        i = new Intent (SignPageActivity.this, AdminPaymentListActivity.class);
+                                    } else {
+                                        i = new Intent (SignPageActivity.this, HomeActivity.class);
+                                    }
+                                    startActivity(i);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -91,7 +99,16 @@ public class SignPageActivity extends AppCompatActivity {
                         error.printStackTrace();
                         try {
                             String body = new String(error.networkResponse.data);;
-                            Toast.makeText(SignPageActivity.this, body, Toast.LENGTH_LONG).show();
+                            AlertDialog alertDialog = new AlertDialog.Builder(SignPageActivity.this).create();
+                            alertDialog.setTitle("Gagal");
+                            alertDialog.setMessage(body);
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
                             progressDialog.dismiss();
                         } catch (Error error1) {
                             error1.printStackTrace();

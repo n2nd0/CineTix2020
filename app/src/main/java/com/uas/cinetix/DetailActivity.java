@@ -56,7 +56,7 @@ public class DetailActivity extends AppCompatActivity {
         scrollView.setVisibility(View.INVISIBLE);
 
         int id = getIntent().getIntExtra("id", 1);
-        String url = Config.HOST + "/movie.php?area_id=1&id=" + id;
+        String url = Config.HOST + "/movie.php?id=" + id;
 
         JsonObjectRequest request = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".AdminPaymentListActivity"></activity>
+        <activity android:name=".UploadPaymentActivity" />
         <activity
             android:name=".PaymentActivity"
             android:label="Pembayaran" />
@@ -29,7 +31,8 @@
             android:label="@string/title_activity_home" />
         <activity android:name=".SignPageActivity" />
         <activity android:name=".OnboardingActivity" />
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

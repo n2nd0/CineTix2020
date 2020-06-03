@@ -17,6 +17,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ public class PaymentActivity extends AppCompatActivity {
         Button btnPay = findViewById(R.id.btnPay);
 
         int ticketCount = selectedSeatIdx.size();
-        int totalPrice = ticketCount * 50000;
+        final int totalPrice = ticketCount * 50000;
 
         seatTxt.setText(TextUtils.join(", ", selectedSeatNames));
         ticketPriceTxt.setText(selectedSeatIdx.size() + " × Rp50.000");
@@ -65,10 +68,16 @@ public class PaymentActivity extends AppCompatActivity {
                             public void onResponse(String response) {
                                 Log.i("response", response);
                                 progressDialog.dismiss();
-                                Intent i = new Intent (PaymentActivity.this, HomeActivity.class);
-                                i.putExtra("jumpTo", "tickets");
-                                finishAffinity();
-                                startActivity(i);
+
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    Intent i = new Intent (PaymentActivity.this, UploadPaymentActivity.class);
+                                    i.putExtra("ticket_id", jsonResponse.getInt("ticket_id"));
+                                    i.putExtra("payment_total", totalPrice);
+                                    startActivity(i);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }, new Response.ErrorListener() {
                             @Override
